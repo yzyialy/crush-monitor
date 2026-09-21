@@ -1,0 +1,165 @@
+/* 深度解读（第二层）：入口、面板、证据、反馈。
+   沿用 style.css 里已有的配色变量，不引入新的设计语言。 */
+
+.deep-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 16px 0;
+}
+.deep-trigger {
+  align-self: flex-start;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid var(--line);
+  font-weight: 550;
+}
+.deep-trigger:hover:not(:disabled) {
+  background: #f3f4f5;
+}
+.deep-status {
+  font-size: 12px;
+  color: var(--muted);
+}
+.deep-status.error {
+  color: #a2503f;
+}
+.deep-privacy {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.deep-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.deep-section h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.deep-section ul {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.deep-section li {
+  line-height: 1.55;
+}
+.deep-muted {
+  color: var(--muted);
+  font-size: 13px;
+}
+.deep-hint {
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.deep-meaning {
+  border-left: 2px solid var(--line);
+  padding-left: 10px;
+  margin-bottom: 10px;
+}
+.deep-meaning strong {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 550;
+}
+.deep-meaning-evidence {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  margin-top: 4px;
+}
+.deep-label {
+  flex: none;
+  font-size: 12px;
+  color: var(--muted);
+  padding-top: 3px;
+}
+
+.deep-evidence {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.deep-evidence-against .deep-evidence-link {
+  color: #8a6d3b;
+}
+.deep-evidence-link {
+  justify-content: flex-start;
+  text-align: left;
+  padding: 3px 7px;
+  border-radius: 6px;
+  background: #00000006;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.deep-evidence-link:hover:not(:disabled) {
+  background: #4975631a;
+}
+
+.deep-feedback {
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.deep-feedback-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.deep-reasons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.deep-reason {
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
+  font-size: 13px;
+}
+.deep-reason.selected {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: #49756312;
+}
+.deep-saved {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* 结果基于较早上下文时的轻量提示：不清空展示，只说明情况 */
+.deep-stale {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  background: #fdf6e3;
+  border: 1px solid #e8d9ae;
+  color: #7a6320;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+/* 点击证据后定位并高亮对应消息 */
+.message.highlighted .bubble {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}

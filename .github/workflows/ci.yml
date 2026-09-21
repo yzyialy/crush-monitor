@@ -1,0 +1,45 @@
+name: CI
+
+# 全部用例都是离线的：不调用 Jev、不调用 DeepSeek、不需要任何 Secret。
+# 这个版本是本机版（没有账号、没有服务端数据库），CI 里也不需要任何外部服务。
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: test (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # 22.12 是 package.json 里的最低要求，24 是当前 LTS
+        node: ["22.12", "24"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+
+      # --include=dev：服务端靠 tsx 直接跑 TypeScript，测试与构建都离不开 devDependencies
+      - name: Install dependencies
+        run: npm ci --include=dev --no-audit --no-fund
+
+      - name: Run tests (offline, no model calls)
+        run: npm test
+
+      - name: Type check + build frontend
+        run: npm run build
+
+      # 构建产物里绝不能出现任何 API Key（仓库自带的测试也会守这条，这里再做一次全局扫描）
+      - name: Make sure no key leaked into the bundle
+        run: |
+          if grep -rInE 'sk-[A-Za-z0-9]{16}|apikey_[A-Za-z0-9]{16}' dist/ ; then
+            echo "::error::构建产物里出现了疑似 API Key"
+            exit 1
+          fi
+          echo "构建产物干净"

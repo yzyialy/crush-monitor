@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>使用说明 · Crush 好感监控器</title>
+<style>
+  :root { --ink:#2f3432; --muted:#7c827e; --line:#e2e4e2; --accent:#49756a; --bg:#f6f7f6; }
+  * { box-sizing: border-box; }
+  body {
+    margin:0; background:var(--bg); color:var(--ink);
+    font: 16px/1.75 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+          "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    -webkit-text-size-adjust: 100%;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 20px 18px 72px; }
+  .card { background:#fff; border:1px solid var(--line); border-radius:12px; padding: 22px 20px 28px; }
+  h1 { font-size: 22px; margin: 4px 0 14px; line-height:1.4; }
+  h2 { font-size: 18px; margin: 30px 0 10px; padding-top: 18px; border-top:1px solid var(--line); }
+  h2:first-of-type { border-top:0; padding-top:0; }
+  h3 { font-size: 16px; margin: 22px 0 8px; }
+  h4 { font-size: 15px; margin: 18px 0 6px; }
+  p { margin: 10px 0; }
+  ul, ol { margin: 10px 0; padding-left: 22px; }
+  li { margin: 5px 0; }
+  code {
+    background:#f1f2f1; border-radius:4px; padding:1px 5px;
+    font: 0.92em/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    word-break: break-word;
+  }
+  pre {
+    background:#2f3432; color:#eef1ef; border-radius:10px; padding:14px 15px;
+    overflow-x:auto; margin: 14px 0;
+  }
+  pre code { background:none; color:inherit; padding:0; font-size: 13.5px; }
+  blockquote {
+    margin: 14px 0; padding: 10px 14px; background:#fdf9ec;
+    border-left:3px solid #e0c976; border-radius:0 8px 8px 0; color:#6b5a20;
+  }
+  blockquote p { margin: 4px 0; }
+  hr { border:0; border-top:1px solid var(--line); margin: 26px 0; }
+  .tw { overflow-x:auto; margin: 14px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: 14.5px; }
+  th, td { border:1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background:#f3f5f4; font-weight:600; }
+  strong { font-weight: 620; }
+  .foot { color:var(--muted); font-size: 13px; margin-top: 22px; text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+<h1>使用说明</h1>
+<p>一个帮你读懂微信聊天的小工具。它会把对方每句话的情绪和意图标出来，帮你看看自己的回复哪里没表达好，并在你攒了足够多的聊天之后，告诉你「这一次和她平时相比有什么不同」。</p>
+<p>分析结果只当参考。AI 看不到你们现实里怎么相处，也不知道聊天之外发生了什么，怎么理解对方、怎么表达自己，最后还是靠你自己。</p>
+<blockquote><p>这份说明对应的是<strong>本机单机版</strong>：跑在你自己这台电脑上，没有账号、没有服务器数据库，数据留在这个浏览器里。</p></blockquote>
+<hr />
+<h2>一、开始之前</h2>
+<p>你需要两样东西：</p>
+<ol><li><strong>这台电脑上已经跑起来的本机版</strong>：终端里执行 <code>npm start</code>，看到 <code>Crush Monitor（本机版）: http://127.0.0.1:3178</code> 这一行就算成功。没有账号、不用登录。</li><li><strong>一个浏览器</strong>：电脑上的 Chrome / Edge / Safari 都行。</li></ol>
+<blockquote><p>如果终端里还多了一行 <code>⚠️ 没有找到前端构建产物 dist/index.html</code>，说明你少跑了 <code>npm run build</code>：先跑它，再刷新页面。</p></blockquote>
+<h2>二、打开就能用</h2>
+<p>在浏览器地址栏输入：</p>
+<pre><code>http://127.0.0.1:3178/</code></pre>
+<p>直接就是聊天界面，没有登录这一步。</p>
+<blockquote><p>数据存在这个浏览器的本地存储里：换浏览器、换用户、开无痕窗口都看不到同一份数据；清掉「网站数据」就等于删掉记录。</p></blockquote>
+<p><strong>请一直用 <code>127.0.0.1</code> 这个地址打开。</strong> 不建议改用本机的局域网 IP（例如 <code>http://192.168.x.x:3178/</code>）： 那种地址在浏览器眼里不是「安全上下文」，历史上正是它导致页面上的加密接口不存在、点了分析没反应（这一版已经修好并加了回归测试，但仍然不推荐）；而且它意味着同一个网络里的任何人都能打开这个页面、看到你全部聊天记录——本机版没有登录这道门。</p>
+<h2>三、第一次分析：把聊天粘进去</h2>
+<ol><li>在<strong>电脑版微信</strong>里，选中你想分析的聊天，右键 → 复制（可以一次多选几十条）。</li><li>回到网页，粘贴到下方那个大输入框里。</li><li><strong>先别急着点分析</strong>——这一步很关键，见下一节。</li><li>确认内容没问题后，点右下角「<strong>分析聊天</strong>」（也可以按 <code>Ctrl + Enter</code>）。</li><li>如果这是第一次粘贴，会弹窗问你「哪个昵称是你」，选一下，确认。</li></ol>
+<blockquote><p><strong>粘贴之后不会自动开始分析</strong>，这是故意的：留出时间让你改内容。</p></blockquote>
+<p>确认弹窗里那个「开始分析」按钮在条件不满足时是点不动的（灰色），<strong>按钮下面会用红字写清楚为什么</strong>：「没识别到聊天记录」/「识别到 3 个说话人」/「请先点一下哪个昵称是你」。条件满足时那里会显示一句灰色说明：确认后会先把这段记录存进这台电脑的浏览器里，然后开始逐句分析。</p>
+<h2>四、语音、图片、表情包：补一句描述</h2>
+<p>微信复制出来的语音、图片、表情包只有个占位符，正文是看不见的。<strong>在占位符后面直接写一句描述就行</strong>：</p>
+<pre><code>对方 21:00
+[语音] 她说周末要加班，可能来不了
+
+对方 21:02
+[图片] 一张加班的工位照片，屏幕上全是代码
+
+对方 21:04
+[动画表情] 一只猫笑得打滚</code></pre>
+<ul><li><strong>补了描述的</strong>：会当成这条消息的内容参与分析，气泡下方会标出「语音 / 图片 / 表情包 · 你补充的描述」。</li><li><strong>没补描述的</strong>：和以前一样跳过、不参与分析，气泡下方会标出「没有补充内容，这条不会参与分析」。</li></ul>
+<p>你补的描述会被明确标注成「这是用户手动转述，不是原始文字」再交给 AI，所以 AI 不会把它当成对方打出来的字。</p>
+<h2>五、结果怎么看</h2>
+<p>分析完成后，聊天区会变成这样：</p>
+<div class="tw"><table><thead><tr><th>位置</th><th>内容</th></tr></thead><tbody><tr><td>每句话下面</td><td>对方消息显示「情绪」和「意图」标签（各三项概率）；你自己的消息显示「回复评级」</td></tr><tr><td>点标签</td><td>弹出这一句的详细解读</td></tr><tr><td>底部「我的发挥」</td><td>你在这段对话里的整体表现评级</td></tr><tr><td>底部「下一步」</td><td>这段对话结束处适合做的方向</td></tr><tr><td>「深度解读」按钮</td><td>让 AI 把这段交流整理成一段完整解读（需要几秒，会消耗你自己的 API 额度）</td></tr><tr><td>「长期观察」按钮</td><td>你和她之间的长期档案，详见第八节</td></tr></tbody></table></div>
+<p><strong>「深度解读」里看什么</strong>（它有七个区域）：</p>
+<ol><li><strong>发生了什么</strong> —— 客观事实</li><li><strong>和她平时相比</strong> —— 这次和她自己过去多次对话的水平差在哪（这是最有价值的一块）</li><li><strong>你可能漏掉的信号</strong> —— 你也许没注意到的社交信号</li><li><strong>可能是什么意思</strong> —— 并列的几种解释，不是唯一答案</li><li><strong>为什么这么判断</strong> —— 点进去能看到支持判断的原话</li><li><strong>目前不能确定</strong> —— 系统自己承认不知道的部分</li><li><strong>接下来观察什么</strong> —— 不是「你该怎么回」，而是下次留意什么</li></ol>
+<h2>六、历史对话：翻回以前那一段</h2>
+<p>聊过几次之后，记录会分成好几「段」。顶部那个「<strong>历史对话 N</strong>」（N 是段数）就是总入口：</p>
+<ul><li>每一行显示：<strong>名字 + 条数 + 最近一条时间 + 第一句摘要</strong>，当前正在看的那段标着「当前」。</li><li>名字默认长这样：<code>第 2 段 · 09-21 17:19 · 在干嘛</code>。带上序号和时间是故意的——同一段聊天重复粘贴时，光看第一句会以为「每段名字都一样」。</li><li><strong>点一行 = 打开那一段</strong>：当时的聊天和<strong>已经分析好的情绪/意图标签</strong>一起回到界面，<strong>不会重新调用模型、不消耗额度</strong>。</li><li><strong>改名</strong>：点「改名」输入新名字；<strong>留空 = 恢复自动命名</strong>。</li><li><strong>删除</strong>：点「删除」会二次确认，<strong>只删那一段</strong>，长期观察（基线、记忆、模式）不受影响。</li><li>列表按<strong>最近更新</strong>排序，最近聊过的在最上面。<strong>改名不会改变顺序</strong>（改完名那段不会跳到最前面）。</li></ul>
+<h3>想开一段新的，又不想丢掉旧的</h3>
+<p>打开「聊天设置」（左上角齿轮，或右上角「⋯」），点 <strong>「开始新对话（保留历史）」</strong>：</p>
+<ul><li>界面清空，本机会新开（或复用一段已经空着的）记录并切过去；</li><li>下一次粘贴就写进这一段，<strong>旧记录一条都不会删</strong>，随时能在「历史对话」里翻回去；</li><li>顶部的 <code>+</code>（新聊天）也是同一个行为：清空当前视图、开新的一段。</li></ul>
+<h3>改「对方称呼」</h3>
+<p>同一个设置面板里的「<strong>对方称呼</strong>」可以随时改（例如从默认的 <code>Crush</code> 改成 <code>小满</code>）：</p>
+<ul><li>改的是显示名——出现在顶部和「历史对话」列表里；</li><li><strong>不影响任何一条聊天记录</strong>，也不会把长期档案拆成两份（档案还是同一个人的）。</li></ul>
+<h3>点了没反应？看顶部的红条</h3>
+<p>任何「点下去却没有结果」的情况，页面顶部都会弹出一条<strong>红色说明</strong>（旁边有「知道了」可以关掉），例如：</p>
+<ul><li>「没能把这段聊天保存到本机：…」——浏览器不让写本机存储（无痕窗口、禁用了网站数据），或存储满了（一般 5MB 左右）；</li><li>「这次没有新增消息：…」——这段内容之前导入过了，所以没有重新分析（想重跑点「继续分析」）；</li><li>「操作没有完成：…」——页面里的异常原文。</li></ul>
+<p>终端里同时会有一行 <code>[client-error] scope=... msg=...</code>：<strong>只有错误文本、页面路径与浏览器信息，没有聊天内容、没有密钥</strong>。真出问题时可以把那一行贴出来。</p>
+<h2>七、它会说什么、不会说什么</h2>
+<p><strong>会说</strong>：她平时回复大概多快多长、会不会主动开口、有哪些口头禅、一次次对话里反复出现的模式。</p>
+<p><strong>不会说</strong>：「她是什么类型的人」「她是回避型」「她喜欢你的概率是 X%」，也不会教你用什么话术去操纵对方。这是产品的硬约束，不是能力不足。</p>
+<p>另外要理解它的一个原则：<strong>「互动投入下降」不等于「关系变差」，更不等于「她不喜欢你」</strong>。它只描述可观察的行为变化，比如这次回复比平时慢、比平时短。原因可能是加班、生病、心情不好——工具不知道，你也不该直接下结论。</p>
+<h2>八、长期观察：用几次才准</h2>
+<p>点「长期观察」打开，里面有几块：</p>
+<ul><li><strong>历史样本</strong>：已经记录了几段对话。<strong>不满 3 段时会明确告诉你「历史样本还不足」</strong>，它不会假装已经认识这个人。</li><li><strong>最近明显变化</strong>：这次和平时比，哪些指标差得多。</li><li><strong>已确认事实 / 观察到的事实</strong>：从聊天里记下来的客观信息（例如「对方说这周末考试」）。</li><li><strong>观察中的模式</strong>：由程序统计出来的行为模式，例如「历史上她的回复通常很短（5 段对话，平均约 1.6 字）」。<strong>需要至少 3 段对话支持才会形成，涉及一起活动这类解释需要 4 段。</strong></li><li><strong>常见表达习惯</strong>：例如「哈哈」在你的聊天里跨很多种语境出现，就会被标成&quot;语气填充&quot;，避免每次都被解读成&quot;她很开心&quot;或&quot;她在掩饰&quot;。</li></ul>
+<p><strong>建议</strong>：连续粘贴 3~5 段不同日期的聊天，长期观察才会真正有用。第一段对话时它只知道这一次。</p>
+<blockquote><p>长期观察跨对话累积，跟「第几段」无关：「开始新对话」只是换一段新的聊天记录，不会清空基线、记忆和模式。</p></blockquote>
+<h2>九、确认与纠错（很重要）</h2>
+<p>在「长期观察」里，你可以对一次解读做两件事：</p>
+<p><strong>1. 这个判断后来被证实了吗？</strong> 选「基本正确 / 部分正确 / 不正确 / 还不知道」。如果你选了正确，它会<strong>再问你确认的是哪一部分</strong>——只有你明确勾选的内容才会被记成&quot;已确认的事实&quot;，其他仍然只是推测。</p>
+<p><strong>2. 不是这样，我来说实际情况</strong> 比如系统把「回复变短」理解成互动降温，而你知道那天她在发烧，就写：「不是，她那天只是发烧」。 系统会：把你这句记成<strong>你确认的事实</strong> → 把相关的模型推断标成&quot;已被推翻&quot; → <strong>但不删除历史推断</strong>，以后复盘还能看到&quot;当时模型把回复变短解释成互动下降，后来确认是生病&quot;。</p>
+<p>你越是纠正它，后面越准。它永远不会把自己的猜测自动变成事实——<strong>只有你亲自确认的才会</strong>。</p>
+<h2>十、换电脑、换浏览器会怎样</h2>
+<p><strong>数据跟着浏览器走，不跟着你走。</strong> 长期档案和聊天记录都存在这台电脑的这个浏览器里：</p>
+<ul><li>刷新页面、关掉再打开：记录还在，会自动恢复到上次看的那一段（含已分析好的标签），不消耗额度。</li><li>换一台电脑、换一个浏览器、开无痕窗口：看不到原来的数据，等于从零开始。</li><li>想让数据跟着你走：用浏览器开发者工具的 Application → Local Storage，把 <code>crush-monitor.</code> 开头的键手工导出来，在另一台机器上贴回去（详见 <code>docs/DEPLOYMENT.md</code> 第六节）。</li></ul>
+<h2>十一、你的数据在哪、谁能看</h2>
+<ul><li>数据存在<strong>这台电脑的浏览器本地存储（localStorage）里</strong>，不在任何服务器上，也不在第三方公司手里。</li><li><strong>服务端不保存聊天内容和档案</strong>：它只在你点分析时收到「这次要分析的消息 + 检索出来的相关记忆」，用完即弃。</li><li><strong>诚实说明</strong>：任何能打开这台电脑、并使用这个浏览器的人都看得到这些数据（本机版没有登录这道门）。别在公用电脑上粘贴你不想被别人看到的聊天。</li><li>分析时会把<strong>当前相关的聊天片段</strong>发送给两个 AI 服务（TypeSafe 的 Jev、DeepSeek）用于生成结果，这是它工作的前提——&quot;数据存在本机&quot;不等于&quot;分析过程离线&quot;。</li><li>你可以随时：删除单条记忆、清空历史基线、删除某个人的整份档案、在「历史对话」里删掉单独一段聊天，或者在「长期观察」里一次性清空全部长期数据与本机聊天记录。</li></ul>
+<h2>十二、常见问题</h2>
+<p><strong>打不开网页，只看到一段中文提示页？</strong> 说明前端还没构建。在项目根目录跑 <code>npm run build</code>，然后刷新。终端里同时会打印同一句提示。</p>
+<p><strong>打不开网页（连提示页都没有）？</strong> 先确认终端里服务还在跑，网址是 <code>http://127.0.0.1:3178/</code>。如果换了端口，地址栏里的端口也要跟着改。</p>
+<p><strong>点「分析聊天」后报错？</strong> 先看顶部的红条，它会写清原因。常见原因：这段聊天里没有可读的文字（全是没补描述的图片语音）、服务端 <code>.env</code> 里的第一层 API Key 还没填（或填错了）、API 额度用完了、或者浏览器不让写本机存储（无痕窗口 / 存储满）。重试一次通常能过。</p>
+<p><strong>按钮是灰的、点不动？</strong> 看按钮下面的红字：它会告诉你差什么（没识别到聊天、说话人超过两个、还没选哪个昵称是你）。</p>
+<p><strong>刷新页面后聊天没了？</strong> 正常情况下不会——本机存储里存着，刷新后会自动恢复上次看的那一段（含已分析好的标签）。如果真没了，检查是不是换了浏览器/开了无痕窗口，或者清过「网站数据」。</p>
+<p><strong>清空之后刷新，旧聊天又回来了？</strong> 现在不会了。设置里那个按钮叫「开始新对话（保留历史）」：它新开一段并切过去，下一次粘贴写进新段，旧记录留在「历史对话」里。</p>
+<p><strong>「深度解读」很慢或失败？</strong> 它要调用更贵的第二层模型，正常需要 5~15 秒。失败不影响第一层的情绪/意图标签，可以稍后重试。它必须由你点按钮触发，不会自动跑。</p>
+<p><strong>历史列表里几段名字看起来一样？</strong> 默认名字是「第 N 段 · 时间 · 第一句」，序号和时间不会重复。如果确实想区分得更清楚，点「改名」自己起个名字（改名不会改变列表顺序）。</p>
+<p><strong>能不能帮忙分析别人的聊天？</strong> 技术上可以，但请尊重对方隐私，也别把分析结果当成对一个人的定论。</p>
+<hr />
+<p>*这个工具跑在你自己这台电脑上，自己维护。说明书是 <code>docs/USER-GUIDE.md</code>，改完跑一次 <code>npm run guide:build</code> 会重新生成这个页面。*</p>
+  </div>
+  <p class="foot">本机单机版：跑在你自己这台电脑上，自己维护。</p>
+</div>
+</body>
+</html>

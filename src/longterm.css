@@ -1,0 +1,187 @@
+/* 长期观察（第三阶段）：可折叠区域 + 详细依据。
+   沿用 deep.css / style.css 既有变量，不引入新的设计语言。 */
+
+.lt-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* 与「深度解读」并列的入口，沿用同一套按钮样式 */
+.lt-trigger {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.lt-trigger-status {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.lt-section h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.lt-section h4 {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 12px 0 4px;
+}
+
+.lt-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+.lt-cold {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  background: #fdf6e3;
+  border: 1px solid #e8d9ae;
+  color: #7a6320;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+.lt-muted {
+  color: var(--muted);
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+
+.lt-list {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  line-height: 1.55;
+}
+.lt-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.lt-tag {
+  flex: none;
+  font-size: 11.5px;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 1px 7px;
+}
+
+.lt-remove {
+  border: none;
+  background: none;
+  color: var(--muted);
+  padding: 0 2px;
+}
+.lt-remove:hover:not(:disabled) {
+  color: #a2503f;
+}
+
+.lt-confirm {
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+.lt-verdicts,
+.lt-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.lt-verdict {
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
+  font-size: 13px;
+}
+.lt-verdict.selected {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: #49756312;
+}
+
+.lt-parts {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 10px;
+}
+.lt-part {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  text-align: left;
+  padding: 7px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: #fff;
+  font-size: 13px;
+}
+.lt-part.selected {
+  border-color: var(--accent);
+  background: #49756312;
+}
+.lt-part-label {
+  font-size: 12px;
+  color: var(--muted);
+}
+.lt-part-detail {
+  line-height: 1.5;
+}
+
+.lt-correction {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+.lt-conflict {
+  display: block;
+  margin-top: 2px;
+  color: #8a6d3b;
+}
+
+.lt-notice {
+  margin-top: 8px;
+  font-size: 12.5px;
+  color: var(--accent);
+}
+
+.lt-detail-toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+.lt-detail-toggle:hover:not(:disabled) {
+  color: inherit;
+}
+
+.lt-detail {
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px dashed var(--line);
+}
+
+.lt-danger {
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}

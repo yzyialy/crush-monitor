@@ -1,3 +1,18 @@
 node_modules/
 dist/
 .env
+.env.*
+!.env.example
+artifacts/
+
+.runtime/
+
+# 本机版的长期数据都在浏览器 localStorage 里，服务端不落盘任何数据。
+# 下面这些规则保留是为了防止误提交本地产生的临时文件。
+data/
+logs/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+.tmp-*/
+*.log
